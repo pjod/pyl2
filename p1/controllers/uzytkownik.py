@@ -9,6 +9,8 @@ from p1.lib.base import BaseController, render
 
 class UzytkownikController(BaseController):
 
-#    def welcome(self):
+    def welcome(self):
+        return "dupa"
 
-#    def logout(self):
+    def logout(self):
+        return "dupa"
