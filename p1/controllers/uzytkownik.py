@@ -10,7 +10,12 @@ from p1.lib.base import BaseController, render
 class UzytkownikController(BaseController):
 
     def welcome(self):
-        return "dupa"
+        if request.environ.get("REMOTE_USER"):
+            return render('/uzytkownik/welcome.mako')
+        else:
+            return redirect(url(controller='gosc', action="logowanie"))
 
     def logout(self):
-        return "dupa"
+        session['user'] = ""
+        session.save()
+        return redirect(url(controller='gosc', action="welcome"))
