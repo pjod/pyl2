@@ -1,0 +1,10 @@
+*.pyc
+*.pyo
+*.swp
+*.swo
+*.cache
+*.data
+*.eg
+*.egg
+*.egg-info
+
