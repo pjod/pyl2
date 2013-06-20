@@ -7,7 +7,6 @@ from pylons.controllers.util import abort, redirect
 
 from p1.lib.base import BaseController, render
 
-#log = logging.getLogger(__name__)
 
 class GoscController(BaseController):
 
@@ -17,15 +16,10 @@ class GoscController(BaseController):
     def logowanie(self):
         return render("gosc/logowanie.mako")
 
-    def __before__(self, action, **params):
-        user = session.get('user')
-        if user:
-            request.environ['REMOTE_USER'] = user
-
     def uwierzyt(self):
-        if request.params['password'] == request.params['password'] and \
-        request.params['login'] == request.params['login']:
-            session['user'] = request.params['login']
+        if request.POST['password'] == request.POST['password'] and \
+        request.POST['login'] == request.POST['login']:
+            session['user'] = request.POST['login']
             session.save()
             return redirect(url(controller='uzytkownik', action="welcome"))
         else:
