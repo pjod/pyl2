@@ -17,8 +17,8 @@ class GoscController(BaseController):
         return render("gosc/logowanie.mako")
 
     def uwierzyt(self):
-        if request.POST['password'] == request.POST['password'] and \
-        request.POST['login'] == request.POST['login']:
+        import p1.model.users as users
+        if users.auth(request.POST['login'], request.POST['password']):
             session['user'] = request.POST['login']
             session.save()
             return redirect(url(controller='uzytkownik', action="welcome"))
