@@ -7,8 +7,7 @@ def auth(login, password):
         hashlib.sha224(SOL_DO_HASEL + password).hexdigest() == \
         USERS.get(user).get('haslo'):
             return True
-        else:
-            return False
+    return False
 
 SOL_DO_HASEL = "123sdf45"
 
