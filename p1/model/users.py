@@ -2,12 +2,18 @@ import hashlib
 
 
 def auth(login, password):
-    for user in USERS:
-        if login == user and \
-        hashlib.sha224(SOL_DO_HASEL + password).hexdigest() == \
-        USERS.get(user).get('haslo'):
-            return True
-    return False
+#    for user in USERS:
+#        if login == user and \
+#        hashlib.sha224(SOL_DO_HASEL + password).hexdigest() == \
+#        USERS.get(user).get('haslo'):
+#            return True
+#    return False
+    if USERS.get(login) and \
+    hashlib.sha224(SOL_DO_HASEL + password).hexdigest() == \
+    USERS.get(login).get('haslo'):
+        return True
+    else:
+        return False
 
 SOL_DO_HASEL = "123sdf45"
 
