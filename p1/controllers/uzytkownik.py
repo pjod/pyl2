@@ -10,7 +10,9 @@ class UzytkownikController(BaseController):
 
     def welcome(self):
         if session.get('user'):
-            return render('/uzytkownik/welcome.mako')
+            import p1.model.users as users
+            return render('/uzytkownik/welcome.mako',
+            extra_vars={'juzer': users.USERS[session.get('user')]['nazwisko']})
         else:
             return redirect(url(controller='gosc', action="logowanie"))
 

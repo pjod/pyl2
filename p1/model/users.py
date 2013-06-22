@@ -10,7 +10,7 @@ def auth(login, password):
 #    return False
     if USERS.get(login) and \
     hashlib.sha224(SOL_DO_HASEL + password).hexdigest() == \
-    USERS.get(login).get('haslo'):
+    USERS[login]['haslo']:
         return True
     else:
         return False
