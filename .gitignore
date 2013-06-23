@@ -3,7 +3,7 @@
 *.swp
 *.swo
 *.cache
-*.data
 *.eg
 *.egg
 *.egg-info
+*.data
