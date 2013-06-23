@@ -4,9 +4,10 @@ import p1.lib.helpers as h
 
 from pylons import request, response, session, tmpl_context as c, url
 from pylons.controllers.util import abort, redirect
+from pylons.decorators import validate
 
 from p1.lib.base import BaseController, render
-
+from p1.model.form import Valid
 
 class GoscController(BaseController):
 
@@ -16,6 +17,7 @@ class GoscController(BaseController):
     def logowanie(self):
         return render("gosc/logowanie.mako")
 
+    @validate(schema=Valid(), form="logowanie")
     def uwierzyt(self):
         import p1.model.users as users
         if users.auth(request.POST['login'], request.POST['password']):
