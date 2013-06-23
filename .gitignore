@@ -6,3 +6,4 @@
 *.eg
 *.egg
 *.egg-info
+*.data
