@@ -7,6 +7,8 @@ from p1.lib.base import BaseController, render
 from pylons import app_globals as g
 from p1.model.auth import dodaj
 import psycopg2
+import formencode
+
 
 class AdminController(BaseController):
 
@@ -28,7 +30,14 @@ class AdminController(BaseController):
                     )
             cursor.execute("commit")
         except psycopg2.Error as e:
-            print((e, e.pgerror))
+            if "\"users_login_key\"" in e.pgerror:
+                print("duplikat!")
+                from random import getrandbits
+                kluczyk = getrandbits(20)
+                session["duplikaty_kont_%s" % kluczyk] = request.POST
+                redirect(url(action="form"))
+            else:
+                raise e
         finally:
             cursor.close()
             conn.close()
@@ -36,3 +45,11 @@ class AdminController(BaseController):
             return "ok"
         else:
             return "duuuuupa:>"
+
+#from random import getrandbits
+#redirect(url(action="form", kluczyk=kluczyk))
+    def form(self)
+        if request.GET.get("kluczyk") and session.has_key(
+            "duplikaty_kont_%s" %request.GET["kluczyk"]):
+                formencode.htmlfill.render(szablon.mako, session["duplikaty_kont_%s...)
+del session["duplikaty_kont_%s....]

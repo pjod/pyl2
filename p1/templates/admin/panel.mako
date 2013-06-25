@@ -1,7 +1,10 @@
 <%inherit file="/layout.mako"/>
 
-<h4>hejka ${c.nazwisko}!</h4>
-<p>
+% if c.konto_juz_istnieje:
+    <div><b> DUUUUUPa konto istnieje</b></div>
+    formencode.htmlfill.render()
+% endif
+
 ${h.form(url(controller="admin", action="dodaj_usera"), method ="POST")}
 <fieldset>
     <legend>Dodaj usera</legend>
