@@ -9,8 +9,8 @@ from p1.lib.base import BaseController, render
 class UzytkownikController(BaseController):
 
     def welcome(self):
-        if session.get('rekord'):
-            c.nazwisko = session['rekord']['nazwisko']
+        if session.get('user'):
+            c.nazwisko = session['user']['nazwisko']
             return render('/uzytkownik/welcome.mako')
         else:
             return redirect(url(controller='gosc', action="logowanie"))

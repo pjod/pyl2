@@ -12,6 +12,7 @@ ${h.form('uwierzyt', method='post')}
     </fieldset>
 
 <div>${h.submit("uwierzyt", "Zaloguj")}</div>
+</form>
 
 ${h.form('uwierzyt_admin', method='post')}
 
@@ -25,4 +26,4 @@ ${h.form('uwierzyt_admin', method='post')}
     </fieldset>
 
 <div>${h.submit("uwierzyt_admin", "Zaloguj admina")}</div>
-
+</form>
