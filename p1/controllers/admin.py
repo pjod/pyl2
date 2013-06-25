@@ -31,11 +31,10 @@ class AdminController(BaseController):
             cursor.execute("commit")
         except psycopg2.Error as e:
             if "\"users_login_key\"" in e.pgerror:
-                print("duplikat!")
                 from random import getrandbits
                 kluczyk = getrandbits(20)
                 session["duplikaty_kont_%s" % kluczyk] = request.POST
-                redirect(url(action="form"))
+                redirect(url(action="form"), kluczyk=kluczyk)
             else:
                 raise e
         finally:
@@ -46,10 +45,9 @@ class AdminController(BaseController):
         else:
             return "duuuuupa:>"
 
-#from random import getrandbits
-#redirect(url(action="form", kluczyk=kluczyk))
-    def form(self)
-        if request.GET.get("kluczyk") and session.has_key(
-            "duplikaty_kont_%s" %request.GET["kluczyk"]):
-                formencode.htmlfill.render(szablon.mako, session["duplikaty_kont_%s...)
-del session["duplikaty_kont_%s....]
+    def form(self):
+        if request.GET.get("kluczyk") and "duplikaty_kont_%s" \
+        % request.GET["kluczyk"] in session:
+                formencode.htmlfill.render(
+                    panel.mako, session["duplikaty_kont_%s...)"]
+    session["duplikaty_kont_%s" % kluczyk]
