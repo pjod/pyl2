@@ -19,7 +19,7 @@ class AdminController(BaseController):
         else:
             return redirect(url(controller='gosc', action="logowanie"))
 
-#    @validate(schema=Dodaj_Usera(), form="dodaj_usera")
+    @validate(schema=Dodaj_Usera(), form="dodaj_usera")
     def dodaj_usera(self):
         conn = g.dbpool.connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)
@@ -52,11 +52,10 @@ class AdminController(BaseController):
         if request.GET.get("kluczyk") and "duplikaty_kont_%s" \
         % request.GET["kluczyk"] in session:
             c.duplikat = True
-            formencode.htmlfill.render(
+            return formencode.htmlfill.render(
                 render("/admin/panel.mako"), session["duplikaty_kont_%s"
                 % request.GET["kluczyk"]])
-     #       del session["duplikaty_kont_%s" % request.GET["kluczyk"]]
-            print("tututututu")
+            del session["duplikaty_kont_%s" % request.GET["kluczyk"]]
         c.duplikat = False
-     #   del session["duplikaty_kont_%s" % request.GET["kluczyk"]]
+        del session["duplikaty_kont_%s" % request.GET["kluczyk"]]
         return render("/admin/panel.mako")
