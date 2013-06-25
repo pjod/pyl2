@@ -2,8 +2,8 @@
 #import logging
 import p1.lib.helpers as h
 
-from pylons import request, response, session, tmpl_context as c, url
-from pylons.controllers.util import abort, redirect
+from pylons import request, session, tmpl_context as c, url
+from pylons.controllers.util import redirect
 from pylons.decorators import validate
 from pylons import app_globals as g
 from p1.lib.base import BaseController, render

@@ -1,7 +1,7 @@
 #import logging
 
-from pylons import request, response, session, tmpl_context as c, url
-from pylons.controllers.util import abort, redirect
+from pylons import session, tmpl_context as c, url
+from pylons.controllers.util import redirect
 
 from p1.lib.base import BaseController, render
 
@@ -9,7 +9,7 @@ from p1.lib.base import BaseController, render
 class UzytkownikController(BaseController):
 
     def welcome(self):
-        if session.get('user'):
+        if session.get('rekord'):
             c.nazwisko = session['rekord']['nazwisko']
             return render('/uzytkownik/welcome.mako')
         else:
