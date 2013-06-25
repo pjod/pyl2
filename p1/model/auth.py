@@ -24,7 +24,8 @@ def hash_pass(password):
 
 
 def dodaj(cursor, login, password, name, surname):
-    return cursor.execute(
+    cursor.execute(
         "INSERT INTO users (login, password, imie, nazwisko) \
         VALUES (%s, %s, %s, %s)", (login, hash_pass(password), name, surname)
         )
+    return cursor.rowcount

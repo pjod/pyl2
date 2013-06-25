@@ -6,7 +6,7 @@ from psycopg2.extras import RealDictCursor
 from p1.lib.base import BaseController, render
 from pylons import app_globals as g
 from p1.model.auth import dodaj
-
+import psycopg2
 
 class AdminController(BaseController):
 
@@ -26,12 +26,11 @@ class AdminController(BaseController):
                 cursor, request.POST['login'], request.POST['password'],
                 request.POST['name'], request.POST['surname']
                     )
+            cursor.execute("commit")
         finally:
             cursor.close()
             conn.close()
-            session.clear()
-            session.save()
-        if dodany:
+        if dodany == 1:
             return "ok"
         else:
             return "duuuuupa:>"
