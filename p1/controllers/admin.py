@@ -34,7 +34,8 @@ class AdminController(BaseController):
                 from random import getrandbits
                 kluczyk = getrandbits(20)
                 session["duplikaty_kont_%s" % kluczyk] = request.POST
-                redirect(url(action="form"), kluczyk=kluczyk)
+                session.save()
+                redirect(url(action="form", kluczyk=kluczyk))
             else:
                 raise e
         finally:
