@@ -27,10 +27,12 @@ class AdminController(BaseController):
                 request.POST['name'], request.POST['surname']
                     )
             cursor.execute("commit")
+        except psycopg2.Error as e:
+            print((e, e.pgerror))
         finally:
             cursor.close()
             conn.close()
-        if dodany == 1:
+        if dodany:
             return "ok"
         else:
             return "duuuuupa:>"
