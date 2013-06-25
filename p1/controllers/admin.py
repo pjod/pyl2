@@ -35,7 +35,9 @@ class AdminController(BaseController):
                 kluczyk = getrandbits(20)
                 session["duplikaty_kont_%s" % kluczyk] = request.POST
                 session.save()
-                redirect(url(action="form", kluczyk=kluczyk))
+                redirect(
+                    url(controller="admin", action="form", kluczyk=kluczyk)
+                    )
             else:
                 raise e
         finally:
@@ -49,7 +51,10 @@ class AdminController(BaseController):
     def form(self):
         if request.GET.get("kluczyk") and "duplikaty_kont_%s" \
         % request.GET["kluczyk"] in session:
-                formencode.htmlfill.render(
-                    '/admin/panel.mako', session["duplikaty_kont_%s"
-                    % request.GET["kluczyk"]])
-        session["duplikaty_kont_%s" % request.GET["kluczyk"]]
+            c.duplikat = True
+            formencode.htmlfill.render(
+                ("/admin/panel.mako"), session["duplikaty_kont_%s"
+                % request.GET["kluczyk"]])
+        c.duplikat = False
+        del session["duplikaty_kont_%s" % request.GET["kluczyk"]]
+        return render("/admin/panel.mako")

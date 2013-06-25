@@ -1,7 +1,8 @@
 <%inherit file="/layout.mako"/>
 
-% if c.konto_juz_istnieje:
-    <div><b> DUUUUUPa konto istnieje</b></div>
+% if c.duplikat:
+    <div><b> DUUUUUPa konto o podanym loginie już istnieje,
+    popraw się albo napraw;></b></div>
 % endif
 
 ${h.form(url(controller="admin", action="dodaj_usera"), method ="POST")}
