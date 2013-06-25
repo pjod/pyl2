@@ -30,22 +30,30 @@ class GoscController(BaseController):
 
     @validate(schema=Valid(), form="logowanie")
     def uwierzyt(self):
-        if auth(self.cursor, request.POST['login'], request.POST['password']):
+        if auth(
+            self.cursor, request.POST['login'], request.POST['password']):
             session['user'] = request.POST['login']
             session.save()
-            return redirect(url(controller='uzytkownik', action="welcome"))
+            return redirect(url(controller='uzytkownik', action="welcome")
+            )
         else:
             return "złe hasło lub login"
 
 
 def auth(cursor, login, password):
-#    conn = g.dbpool.connection()
-#    cursor = conn.cursor(cursor_factory=RealDictCursor)
-    cursor.execute("SELECT id FROM users WHERE login=%s and password=%s",
-        (login, hash_pass(password)))
+    cursor.execute(
+        "SELECT id FROM users WHERE login=%s and password=%s",
+        (login, hash_pass(password))
+        )
     row = cursor.fetchone()
     if row:
-#        c.nazwisko =
+        cursor.execute(
+            "SELECT * FROM users WHERE id=%s",
+            (row['id'])
+            )
+        session['rekord'] = cursor.fetchone()
+        c.nazwisko = session['rekord']['nazwisko']
+        session.save()
         return True
     else:
         return False
