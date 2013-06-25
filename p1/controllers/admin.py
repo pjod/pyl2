@@ -53,8 +53,10 @@ class AdminController(BaseController):
         % request.GET["kluczyk"] in session:
             c.duplikat = True
             formencode.htmlfill.render(
-                ("/admin/panel.mako"), session["duplikaty_kont_%s"
+                render("/admin/panel.mako"), session["duplikaty_kont_%s"
                 % request.GET["kluczyk"]])
+     #       del session["duplikaty_kont_%s" % request.GET["kluczyk"]]
+            print("tututututu")
         c.duplikat = False
-        del session["duplikaty_kont_%s" % request.GET["kluczyk"]]
+     #   del session["duplikaty_kont_%s" % request.GET["kluczyk"]]
         return render("/admin/panel.mako")
