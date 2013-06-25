@@ -50,6 +50,6 @@ class AdminController(BaseController):
         if request.GET.get("kluczyk") and "duplikaty_kont_%s" \
         % request.GET["kluczyk"] in session:
                 formencode.htmlfill.render(
-                    panel.mako, session["duplikaty_kont_%s" \
+                    '/admin/panel.mako', session["duplikaty_kont_%s"
                     % request.GET["kluczyk"]])
-    session["duplikaty_kont_%s" % request.GET["kluczyk"]]
+        session["duplikaty_kont_%s" % request.GET["kluczyk"]]

@@ -2,7 +2,6 @@
 
 % if c.konto_juz_istnieje:
     <div><b> DUUUUUPa konto istnieje</b></div>
-    formencode.htmlfill.render()
 % endif
 
 ${h.form(url(controller="admin", action="dodaj_usera"), method ="POST")}
