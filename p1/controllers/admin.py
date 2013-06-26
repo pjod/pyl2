@@ -19,7 +19,7 @@ class AdminController(BaseController):
         else:
             return redirect(url(controller='gosc', action="logowanie"))
 
-    @validate(schema=DodajUsera(), form="dodaj_usera")
+#    @validate(schema=DodajUsera(), form="dodaj_usera")
     def dodaj_usera(self):
         conn = g.dbpool.connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)
@@ -28,7 +28,6 @@ class AdminController(BaseController):
                 cursor, request.POST['login'], request.POST['password'],
                 request.POST['name'], request.POST['surname']
                     )
-            cursor.execute("commit")
         except psycopg2.Error as e:
             if "\"users_login_key\"" in e.pgerror:
                 from random import getrandbits

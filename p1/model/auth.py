@@ -28,4 +28,8 @@ def dodaj(cursor, login, password, name, surname):
         "INSERT INTO users (login, password, imie, nazwisko) \
         VALUES (%s, %s, %s, %s)", (login, hash_pass(password), name, surname)
         )
-    return cursor.rowcount == 1
+    if cursor.rowcount == 1:
+        cursor.execute("COMMIT")
+        return True
+    else:
+        return False
