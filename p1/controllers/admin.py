@@ -15,7 +15,7 @@ class AdminController(BaseController):
     def welcome(self):
         if session.get('admin'):
             c.nazwisko = session['admin']['nazwisko']
-            return render('/admin/panel.mako')
+            return render('/admin/welcome.mako')
         else:
             return redirect(url(controller='gosc', action="logowanie"))
 
@@ -56,5 +56,4 @@ class AdminController(BaseController):
                 % request.GET["kluczyk"]])
             del session["duplikaty_kont_%s" % request.GET["kluczyk"]]
         c.duplikat = False
-        del session["duplikaty_kont_%s" % request.GET["kluczyk"]]
         return render("/admin/panel.mako")
