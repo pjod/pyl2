@@ -72,6 +72,8 @@ class AdminController(BaseController):
             cursor.close()
             conn.close()
         if users:
-            return users
+            c.surname = session['admin']['nazwisko']
+            c.records = users
+            return render("admin/view.mako")
         else:
             return "kupa"
