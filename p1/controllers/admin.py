@@ -33,17 +33,6 @@ class AdminController(BaseController):
                     )
         except model.user.LoginDuplicate:
             blad = "duplikat"
-#        except psycopg2.Error as e:
-#            if "\"users_login_key\"" in e.pgerror:
-#                from random import getrandbits
-#                kluczyk = getrandbits(20)
-#                session["duplikaty_kont_%s" % kluczyk] = request.POST
-#                session.save()
-#                redirect(
-#                    url(controller="admin", action="form", kluczyk=kluczyk)
-#                    )
-#            else:
-#                raise e
         finally:
             cursor.close()
             conn.close()

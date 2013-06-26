@@ -5,10 +5,6 @@ import psycopg2
 
 class LoginDuplicate(Exception):
     pass
-    if "\"users_login_key\"" in psycopg2.Error.pgerror:
-        raise LoginDuplicate
-    else:
-        raise psycopg2.Error
 
 
 def auth(cursor, login, password):
@@ -25,10 +21,15 @@ def hash_pass(password):
 
 
 def dodaj(cursor, login, password, name, surname):
-    cursor.execute(
+    try:
+        cursor.execute(
         "INSERT INTO users (login, password, imie, nazwisko) \
         VALUES (%s, %s, %s, %s)", (login, hash_pass(password), name, surname)
         )
+    except psycopg2.Error as e:
+        if "\"users_login_key\"" in e.pgerror:
+            raise LoginDuplicate(e)
+            raise LoginDuplicate(e.pgerror)
     if cursor.rowcount == 1:
         cursor.execute("COMMIT")
         return True
