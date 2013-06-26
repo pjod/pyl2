@@ -6,17 +6,26 @@
 
 <table>
 <tr>
+<th>lp</th>
 <th>id</th>
 <th>login</th>
 <th>imię</th>
 <th>nazwisko</th>
+</tr>
+<%
+    j = 1
+%>
+
 % for i in c.records:
     <tr>
-    %for j in i:
-            <td> ${ j }</td>
-    % endfor
-    </tr>
 
+            <td>${j}</td>
+<%
+    j += 1
+%>
+        <td>${i["id"]}</td><td>${i["login"]}</td>
+        <td>${i["imie"]}</td><td>${i["nazwisko"]}</td>
+    </tr>
 % endfor
 </table>
 

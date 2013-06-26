@@ -10,6 +10,9 @@ import p1.model as model
 #import psycopg2
 import formencode
 from pylons.decorators.secure import authenticate_form
+import psycopg2.extensions
+psycopg2.extensions.register_type(psycopg2.extensions.UNICODE)
+psycopg2.extensions.register_type(psycopg2.extensions.UNICODEARRAY)
 
 
 class AdminController(BaseController):
