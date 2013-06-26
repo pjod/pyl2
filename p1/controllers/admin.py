@@ -67,7 +67,7 @@ class AdminController(BaseController):
         conn = g.dbpool.connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)
         try:
-            users = model.users.view(cursor)
+            users = model.user.view(cursor)
         finally:
             cursor.close()
             conn.close()

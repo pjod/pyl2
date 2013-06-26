@@ -36,7 +36,9 @@ def add(cursor, login, password, name, surname):
     else:
         return False
 
+
 def view(cursor):
     cursor.execute(
-        "SELECT *
+        "SELECT * FROM users ORDER BY id"
         )
+    return cursor.fetchone() if cursor.rowcount else None
