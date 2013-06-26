@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from pylons import request, response, session, tmpl_context as c, url
 from pylons.controllers.util import abort, redirect
 from p1.model.form import DodajUsera
