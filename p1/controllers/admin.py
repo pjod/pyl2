@@ -7,7 +7,7 @@ from psycopg2.extras import RealDictCursor
 from p1.lib.base import BaseController, render
 from pylons import app_globals as g
 import p1.model as model
-import psycopg2
+#import psycopg2
 import formencode
 
 
@@ -24,29 +24,40 @@ class AdminController(BaseController):
     def dodaj_usera(self):
         conn = g.dbpool.connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)
+        blad = "unknown"
+        dodany = False
         try:
             dodany = model.user.dodaj(
                 cursor, request.POST['login'], request.POST['password'],
                 request.POST['name'], request.POST['surname']
                     )
-        except psycopg2.Error as e:
-            if "\"users_login_key\"" in e.pgerror:
-                from random import getrandbits
-                kluczyk = getrandbits(20)
-                session["duplikaty_kont_%s" % kluczyk] = request.POST
-                session.save()
-                redirect(
-                    url(controller="admin", action="form", kluczyk=kluczyk)
-                    )
-            else:
-                raise e
+        except model.user.LoginDuplicate:
+            blad = "duplikat"
+#        except psycopg2.Error as e:
+#            if "\"users_login_key\"" in e.pgerror:
+#                from random import getrandbits
+#                kluczyk = getrandbits(20)
+#                session["duplikaty_kont_%s" % kluczyk] = request.POST
+#                session.save()
+#                redirect(
+#                    url(controller="admin", action="form", kluczyk=kluczyk)
+#                    )
+#            else:
+#                raise e
         finally:
             cursor.close()
             conn.close()
         if dodany:
             return "ok"
         else:
-            return "duuuuupa:>"
+            from random import getrandbits
+            kluczyk = getrandbits(20)
+            session["duplikaty_kont_%s" % kluczyk] = request.POST
+            session.save()
+            redirect(
+                url(controller="admin", action="form",
+                    kluczyk=kluczyk, blad=blad)
+                )
 
     def form(self):
         c.nazwisko = session['admin']['nazwisko']
