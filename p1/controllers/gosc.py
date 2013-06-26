@@ -8,7 +8,7 @@ from pylons.controllers.util import redirect
 from pylons.decorators import validate
 from pylons import app_globals as g
 from p1.lib.base import BaseController, render
-from p1.model.form import Valid, ValidAdmin
+from p1.model.schema import schema as sch
 from psycopg2.extras import RealDictCursor
 
 
@@ -20,38 +20,38 @@ class GoscController(BaseController):
     def logowanie(self):
         return render("gosc/logowanie.mako")
 
-    @validate(schema=Valid(), form="logowanie")
+    @validate(schema=sch.Valid(), form="logowanie")
     def uwierzyt(self):
         conn = g.dbpool.connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)
         try:
-            zalogowany = model.user.auth(
+            logged_in = model.user.auth(
                 cursor, request.POST['login'], request.POST['password']
                 )
         finally:
             cursor.close()
             conn.close()
-        if zalogowany:
-            session['user'] = zalogowany
+        if logged_in:
+            session['user'] = logged_in
             session.save()
             return redirect(url(controller='uzytkownik', action="welcome"))
         else:
             return "złe hasło lub login"
 
-    @validate(schema=ValidAdmin(), form="logowanie")
+    @validate(schema=sch.ValidAdmin(), form="logowanie")
     def uwierzyt_admin(self):
         conn = g.dbpool.connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)
         try:
-            zalogowany = model.admin.auth(
+            logged_in = model.admin.auth(
                 cursor, request.POST['login_admin'],
                 request.POST['password_admin']
                 )
         finally:
             cursor.close()
             conn.close()
-        if zalogowany:
-            session['admin'] = zalogowany
+        if logged_in:
+            session['admin'] = logged_in
             session.save()
             return redirect(url(controller='admin', action="welcome"))
         else:

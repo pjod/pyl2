@@ -1,15 +1,15 @@
 <%inherit file="/layout.mako"/>
 
-% if c.nazwisko:
-    <h4>jesteś zalogowany jako: ${c.nazwisko}</h4>
+% if c.surname:
+    <h4>jesteś zalogowany jako: ${c.surname}</h4>
 % endif
 
-% if c.duplikat:
+% if c.duplicate:
     <div><b> DUUUUUPa konto o podanym loginie już istnieje,
     popraw się albo napraw;></b></div>
 % endif
 <p>
-${h.form(url(controller="admin", action="dodaj_usera"), method ="POST")}
+${h.form(url(controller="admin", action="add_user"), method ="POST")}
 <fieldset>
     <legend>Dodaj usera</legend>
 <div><label for="loginField">Login: </label>${h.text("login")}</div>
