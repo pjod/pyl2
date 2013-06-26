@@ -7,7 +7,8 @@ from pylons.controllers.util import redirect
 from pylons.decorators import validate
 from pylons import app_globals as g
 from p1.lib.base import BaseController, render
-from p1.model.form import Valid, Valid_Admin
+from p1.model.form import Valid
+from p1.model.firm import ValidAdmin
 from p1.model.auth import auth, auth_admin
 from psycopg2.extras import RealDictCursor
 
@@ -38,7 +39,7 @@ class GoscController(BaseController):
         else:
             return "złe hasło lub login"
 
-    @validate(schema=Valid_Admin(), form="logowanie")
+    @validate(schema=ValidAdmin(), form="logowanie")
     def uwierzyt_admin(self):
         conn = g.dbpool.connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)

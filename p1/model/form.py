@@ -20,8 +20,12 @@ class Dodaj_Usera(formencode.Schema):
     filter_extra_fields = True
     login = formencode.All(
         formencode.validators.MinLength(4, not_empty=True),
-        formencode.validators.MaxLength(8))
-    password = formencode.validators.MinLenght(8)
+        formencode.validators.MaxLength(8)
+        )
+    password = formencode.All(
+        formencode.validators.MinLenght(8, not empty=True),
+        formencode.validators.MaxLength(22)
+        )
     password_c = formencode.validators.String()
     chained_validatore = [formencode.validators.FieldsMatch('password',
         'password_c')]

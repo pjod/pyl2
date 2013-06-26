@@ -1,6 +1,6 @@
 from pylons import request, response, session, tmpl_context as c, url
 from pylons.controllers.util import abort, redirect
-from p1.model.form import Dodaj_Usera
+from p1.model.form import DodajUsera
 from pylons.decorators import validate
 from psycopg2.extras import RealDictCursor
 from p1.lib.base import BaseController, render
@@ -19,7 +19,7 @@ class AdminController(BaseController):
         else:
             return redirect(url(controller='gosc', action="logowanie"))
 
-    @validate(schema=Dodaj_Usera(), form="dodaj_usera")
+    @validate(schema=DodajUsera(), form="dodaj_usera")
     def dodaj_usera(self):
         conn = g.dbpool.connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)
