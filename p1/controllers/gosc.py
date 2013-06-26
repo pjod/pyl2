@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 #import logging
 import p1.lib.helpers as h
+import p1.model as model
 
 from pylons import request, session, tmpl_context as c, url
 from pylons.controllers.util import redirect
@@ -8,7 +9,6 @@ from pylons.decorators import validate
 from pylons import app_globals as g
 from p1.lib.base import BaseController, render
 from p1.model.form import Valid, ValidAdmin
-from p1.model.auth import auth, auth_admin
 from psycopg2.extras import RealDictCursor
 
 
@@ -25,7 +25,7 @@ class GoscController(BaseController):
         conn = g.dbpool.connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)
         try:
-            zalogowany = auth(
+            zalogowany = model.user.auth(
                 cursor, request.POST['login'], request.POST['password']
                 )
         finally:
@@ -43,7 +43,7 @@ class GoscController(BaseController):
         conn = g.dbpool.connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)
         try:
-            zalogowany = auth_admin(
+            zalogowany = model.admin.auth(
                 cursor, request.POST['login_admin'],
                 request.POST['password_admin']
                 )

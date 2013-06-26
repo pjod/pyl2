@@ -5,7 +5,7 @@ from pylons.decorators import validate
 from psycopg2.extras import RealDictCursor
 from p1.lib.base import BaseController, render
 from pylons import app_globals as g
-from p1.model.auth import dodaj
+import p1.model as model
 import psycopg2
 import formencode
 
@@ -24,7 +24,7 @@ class AdminController(BaseController):
         conn = g.dbpool.connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)
         try:
-            dodany = dodaj(
+            dodany = model.user.dodaj(
                 cursor, request.POST['login'], request.POST['password'],
                 request.POST['name'], request.POST['surname']
                     )
@@ -48,6 +48,7 @@ class AdminController(BaseController):
             return "duuuuupa:>"
 
     def form(self):
+        c.nazwisko = session['admin']['nazwisko']
         if request.GET.get("kluczyk") and "duplikaty_kont_%s" \
         % request.GET["kluczyk"] in session:
             c.duplikat = True

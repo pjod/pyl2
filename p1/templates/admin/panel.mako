@@ -1,7 +1,7 @@
 <%inherit file="/layout.mako"/>
 
 % if c.nazwisko:
-    <h4>hejka ${c.nazwisko}!</h4>
+    <h4>jesteś zalogowany jako: ${c.nazwisko}</h4>
 % endif
 
 % if c.duplikat:
