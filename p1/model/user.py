@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 import hashlib
-import psycopg2.Error as e
+import psycopg2
 
 
 class LoginDuplicate(Exception):
     pass
-    if "\"users_login_key\"" in e.pgerror:
+    if "\"users_login_key\"" in psycopg2.Error.pgerror:
         raise LoginDuplicate
     else:
-        raise e
+        raise psycopg2.Error
 
 
 def auth(cursor, login, password):
