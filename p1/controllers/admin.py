@@ -9,7 +9,7 @@ from pylons import app_globals as g
 import p1.model as model
 #import psycopg2
 import formencode
-from pylons.decorators.secure import authenticate_form, secure_form
+from pylons.decorators.secure import authenticate_form
 
 class AdminController(BaseController):
 

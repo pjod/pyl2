@@ -9,7 +9,7 @@ from pylons import app_globals as g
 from p1.lib.base import BaseController, render
 from p1.model.schema import schema as sch
 from psycopg2.extras import RealDictCursor
-from pylons.decorators.secure import authenticate_form, secure_form
+from pylons.decorators.secure import authenticate_form
 
 
 class GoscController(BaseController):
