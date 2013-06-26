@@ -11,6 +11,7 @@ import p1.model as model
 import formencode
 from pylons.decorators.secure import authenticate_form
 
+
 class AdminController(BaseController):
 
     def welcome(self):
@@ -49,6 +50,7 @@ class AdminController(BaseController):
                     key=key, err=err)
                 )
 
+    @authenticate_form
     def add_user_form(self):
         c.surname = session['admin']['nazwisko']
         if request.GET.get("key") and "duplikaty_kont_%s" \
@@ -60,3 +62,16 @@ class AdminController(BaseController):
             del session["duplikaty_kont_%s" % request.GET["key"]]
         c.duplicate = False
         return render("/admin/panel.mako")
+
+    def view(self):
+        conn = g.dbpool.connection()
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
+        try:
+            users = model.users.view(cursor)
+        finally:
+            cursor.close()
+            conn.close()
+        if users:
+            return users
+        else:
+            return "kupa"
