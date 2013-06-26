@@ -1,10 +1,14 @@
 <%inherit file="/layout.mako"/>
 
+% if c.nazwisko:
+    <h4>hejka ${c.nazwisko}!</h4>
+% endif
+
 % if c.duplikat:
     <div><b> DUUUUUPa konto o podanym loginie już istnieje,
     popraw się albo napraw;></b></div>
 % endif
-
+<p>
 ${h.form(url(controller="admin", action="dodaj_usera"), method ="POST")}
 <fieldset>
     <legend>Dodaj usera</legend>

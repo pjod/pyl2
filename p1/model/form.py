@@ -24,7 +24,7 @@ class DodajUsera(formencode.Schema):
         )
 #    password = formencode.validators.MinLenght(8, not_empty=True)
     password_c = formencode.validators.String()
-    chained_validatore = [formencode.validators.FieldsMatch('password',
-        'password_c')]
+#    chained_validatore = [formencode.validators.FieldsMatch('password',
+#        'password_c')]
     name = formencode.validators.String(not_empty=True)
     surname = formencode.validators.String(not_empty=True)

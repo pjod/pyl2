@@ -15,11 +15,11 @@ class AdminController(BaseController):
     def welcome(self):
         if session.get('admin'):
             c.nazwisko = session['admin']['nazwisko']
-            return render('/admin/welcome.mako')
+            return render('/admin/panel.mako')
         else:
             return redirect(url(controller='gosc', action="logowanie"))
 
-#    @validate(schema=DodajUsera(), form="dodaj_usera")
+    @validate(schema=DodajUsera(), form="dodaj_usera")
     def dodaj_usera(self):
         conn = g.dbpool.connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)
