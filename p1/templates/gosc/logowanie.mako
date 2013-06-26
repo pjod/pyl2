@@ -1,6 +1,6 @@
 <%inherit file="/layout.mako"/>
 
-${h.form('uwierzyt', method='post')}
+${h.secure_form('uwierzyt', method='post')}
 
     <fieldset>
     <legend>logowanie</legend>
@@ -14,7 +14,7 @@ ${h.form('uwierzyt', method='post')}
 <div>${h.submit("uwierzyt", "Zaloguj")}</div>
 </form>
 
-${h.form('uwierzyt_admin', method='post')}
+${h.secure_form('uwierzyt_admin', method='post')}
 
     <fieldset>
     <legend>logowanie admina</legend>

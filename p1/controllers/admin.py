@@ -9,7 +9,7 @@ from pylons import app_globals as g
 import p1.model as model
 #import psycopg2
 import formencode
-
+from pylons.decorators.secure import authenticate_form, secure_form
 
 class AdminController(BaseController):
 
@@ -21,6 +21,7 @@ class AdminController(BaseController):
             return redirect(url(controller='gosc', action="logowanie"))
 
     @validate(schema=AddUser(), form="add_user_form")
+    @authenticate_form
     def add_user(self):
         conn = g.dbpool.connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)

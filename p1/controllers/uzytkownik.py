@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-#import logging
 
 from pylons import session, tmpl_context as c, url
 from pylons.controllers.util import redirect

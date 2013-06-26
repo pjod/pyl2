@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-#import logging
 import p1.lib.helpers as h
 import p1.model as model
 
@@ -10,6 +9,7 @@ from pylons import app_globals as g
 from p1.lib.base import BaseController, render
 from p1.model.schema import schema as sch
 from psycopg2.extras import RealDictCursor
+from pylons.decorators.secure import authenticate_form, secure_form
 
 
 class GoscController(BaseController):
@@ -21,6 +21,7 @@ class GoscController(BaseController):
         return render("gosc/logowanie.mako")
 
     @validate(schema=sch.Valid(), form="logowanie")
+    @authenticate_form
     def uwierzyt(self):
         conn = g.dbpool.connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)
@@ -39,6 +40,7 @@ class GoscController(BaseController):
             return "złe hasło lub login"
 
     @validate(schema=sch.ValidAdmin(), form="logowanie")
+    @authenticate_form
     def uwierzyt_admin(self):
         conn = g.dbpool.connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)

@@ -9,7 +9,7 @@
     popraw się albo napraw;></b></div>
 % endif
 <p>
-${h.form(url(controller="admin", action="add_user"), method ="POST")}
+${h.secure_form(url(controller="admin", action="add_user"), method ="POST")}
 <fieldset>
     <legend>Dodaj usera</legend>
 <div><label for="loginField">Login: </label>${h.text("login")}</div>

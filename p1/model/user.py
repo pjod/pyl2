@@ -35,3 +35,8 @@ def add(cursor, login, password, name, surname):
         return True
     else:
         return False
+
+#def view(cursor):
+#    cursor.execute(
+#        "SELECT *
+#        )
