@@ -98,3 +98,11 @@ class AdminController(BaseController):
                 url(controller="admin", action="list_users", stat="failure"))
 
     def edit_user(self):
+        conn = g.dbpool.connection()
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
+        c.surname = session['admin']['nazwisko']
+        c.stat = None
+        return formencode.htmlfill.render(
+                render("/admin/edit_user.mako"), model.user.get(cursor,
+                    request.POST['id'])
+                )

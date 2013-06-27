@@ -9,7 +9,7 @@ class LoginDuplicate(Exception):
 
 def auth(cursor, login, password):
     cursor.execute(
-        "SELECT id, login, password, imie, nazwisko FROM users \
+        "SELECT id, login, password, name, surname FROM users \
         WHERE login=%s and password=%s", (login, hash_pass(login, password))
        )
     return cursor.fetchone() if cursor.rowcount else None
@@ -23,7 +23,7 @@ def hash_pass(login, password):
 def add(cursor, login, password, password_c, name, surname):
     try:
         cursor.execute(
-        "INSERT INTO users (login, password, imie, nazwisko) \
+        "INSERT INTO users (login, password, name, surname) \
         VALUES (%s, %s, %s, %s)",
         (login, hash_pass(login, password), name, surname)
         )
@@ -40,7 +40,7 @@ def add(cursor, login, password, password_c, name, surname):
 
 def list(cursor):
     cursor.execute(
-        "SELECT id, login, imie, nazwisko FROM users ORDER BY id"
+        "SELECT id, login, name, surname FROM users ORDER BY id"
         )
     return cursor.fetchall() if cursor.rowcount else None
 
@@ -62,6 +62,6 @@ def delete(cursor, id):
 
 def get(cursor, id):
     cursor.execute(
-        "SELECT login, name, surname WHERE id=%s", (id, )
+        "SELECT login, name, surname FROM users WHERE id=%s", (id, )
         )
     return cursor.fetchone() if cursor.rowcount else None

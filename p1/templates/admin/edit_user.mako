@@ -27,6 +27,6 @@ ${h.password("password_c",)}</div>
 </fieldset>
 <div>${h.submit("edit", "Zapisz")}</div>
 </form>
-
+<p>
 
 <div id="menu"><%include file="/admin/menu.mako"/></div>
