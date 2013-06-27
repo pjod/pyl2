@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
+import p1.model as model
+import formencode
+
+from pylons import app_globals as g
 from pylons import request, response, session, tmpl_context as c, url
 from pylons.controllers.util import abort, redirect
-from p1.model.schema.schema import AddUser, EditUser
 from pylons.decorators import validate
-from psycopg2.extras import RealDictCursor
-from p1.lib.base import BaseController, render
-from pylons import app_globals as g
-import p1.model as model
-#import psycopg2
-import formencode
 from pylons.decorators.secure import authenticate_form
+from psycopg2.extras import RealDictCursor
+from p1.model.schema.schema import AddUser, EditUser
+from p1.lib.base import BaseController, render
 
 
 class AdminController(BaseController):
@@ -58,12 +58,12 @@ class AdminController(BaseController):
         % request.GET["key"] in session:
             c.duplicate = True
             return formencode.htmlfill.render(
-                render("/admin/panel.mako"), session["duplikaty_kont_%s"
+                render("/admin/add_user.mako"), session["duplikaty_kont_%s"
                 % request.GET["key"]]
                 )
             del session["duplikaty_kont_%s" % request.GET["key"]]
         c.duplicate = False
-        return render("/admin/panel.mako")
+        return render("/admin/add_user.mako")
 
     def list_users(self):
         if "stat" in request.GET:

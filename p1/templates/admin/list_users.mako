@@ -45,5 +45,5 @@
     </tr>
 % endfor
 </table>
-
+<p>
 <div id="menu"><%include file="/admin/menu.mako"/></div>

@@ -3,13 +3,13 @@ import p1.lib.helpers as h
 import p1.model as model
 
 from pylons import request, session, tmpl_context as c, url
+from pylons import app_globals as g
 from pylons.controllers.util import redirect
 from pylons.decorators import validate
-from pylons import app_globals as g
+from pylons.decorators.secure import authenticate_form
+from psycopg2.extras import RealDictCursor
 from p1.lib.base import BaseController, render
 from p1.model.schema import schema as sch
-from psycopg2.extras import RealDictCursor
-from pylons.decorators.secure import authenticate_form
 
 
 class GoscController(BaseController):

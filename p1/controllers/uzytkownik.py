@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
-
 from pylons import session, tmpl_context as c, url
 from pylons.controllers.util import redirect
-
 from p1.lib.base import BaseController, render
 
 
