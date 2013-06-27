@@ -36,7 +36,7 @@
         <td>${i["login"]}</td><td>${i["name"]}</td><td>${i["surname"]}</td>
 
         <td>${h.secure_form(url(controller="admin", action="edit_user_form"),
-            method ="POST")}
+            method ="GET")}
             ${h.hidden("id", i["id"])}<button>Modyfikuj</button></form></td>
 
         <td>${h.secure_form(url(controller="admin", action="delete_user"),
