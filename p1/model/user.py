@@ -54,7 +54,7 @@ def delete(cursor, id_):
 
 def get(cursor, id_):
     cursor.execute(
-        "SELECT id=%s, login, name, surname FROM users", (id_, )
+        "SELECT id, login, name, surname FROM users WHERE id=%s", (id_, )
     )
     return cursor.fetchone()
 
