@@ -82,6 +82,7 @@ class AdminController(BaseController):
         c.records = list_
         return render("admin/list_users.mako")
 
+    @authenticate_form
     def delete_user(self):
         conn = g.dbpool.connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)
@@ -107,7 +108,8 @@ class AdminController(BaseController):
         c.stat = None
         return formencode.htmlfill.render(
                 render("/admin/edit_user.mako"),
-                model.user.get(cursor, request.GET['id'])
+                model.user.get(cursor, request.GET['id']),
+                force_defaults=False
                 )
 
     @validate(schema=EditUser(), form="edit_user_form")
