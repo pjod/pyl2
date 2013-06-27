@@ -27,15 +27,12 @@ def add(cursor, login, password, password_c, name, surname):
         VALUES (%s, %s, %s, %s)",
         (login, hash_pass(login, password), name, surname)
         )
+        cursor.execute("COMMIT")
     except psycopg2.Error as e:
         if "\"users_login_key\"" in e.pgerror:
             raise LoginDuplicate(e)
             raise LoginDuplicate(e.pgerror)
-    if cursor.rowcount == 1:
-        cursor.execute("COMMIT")
-        return True
-    else:
-        return False
+    return True if cursor.rowcount == 1 else False
 
 
 def list(cursor):
@@ -53,11 +50,7 @@ def delete(cursor, id):
     except:
         print((cursor.query))
         raise
-    if cursor.rowcount == 1:
-        cursor.execute("COMMIT")
-        return True
-    else:
-        return False
+    return True if cursor.rowcount == 1 else False
 
 
 def get(cursor, id):
@@ -73,4 +66,4 @@ def edit(cursor, login, password, name, surname, id_):
             "UPDATE users SET login=%s, password=%s, name=%s, surname=%s WHERE \
             id=%s", (login, hash_pass(login, password), name, surname, id_,)
             )
-        return True if cursor.rowcount == 1 else False
+    return True if cursor.rowcount == 1 else False

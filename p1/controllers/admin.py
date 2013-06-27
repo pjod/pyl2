@@ -87,6 +87,7 @@ class AdminController(BaseController):
         c.surname = session['admin']['nazwisko']
         try:
             success = model.user.delete(cursor, request.POST['id'])
+            cursor.execute("COMMIT")
         finally:
             cursor.close()
             conn.close()
