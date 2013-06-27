@@ -67,6 +67,10 @@ class AdminController(BaseController):
         return render("/admin/panel.mako")
 
     def list_users(self):
+        if request.GET["stat"]:
+            c.stat = request.GET["stat"]
+        else:
+            c.stat = None
         conn = g.dbpool.connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)
         try:

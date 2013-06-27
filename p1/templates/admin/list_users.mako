@@ -4,6 +4,16 @@
 % if c.surname:
     <h4>jesteś zalogowany jako: ${c.surname}</h4>
 % endif
+<p>
+% if c.stat:
+    <script type="text/javascript">alert("\
+    % if c.stat == "success":
+        Operacja się powiodła \
+    % elif c.stat == "failure":
+        Operacja nieudana \
+    % endif
+    ");</script>
+% endif
 
 <table>
 <tr>
