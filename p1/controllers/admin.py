@@ -11,6 +11,10 @@ from psycopg2.extras import RealDictCursor
 from p1.model.schema.schema import AddUser, EditUser
 from p1.lib.base import BaseController, render
 
+import os
+from pylons import config
+import shutil
+
 
 class AdminController(BaseController):
 
@@ -134,3 +138,15 @@ class AdminController(BaseController):
         else:
             return redirect(
                 url(controller="admin", action="list_users", stat="success"))
+
+    def add_file(self):
+        file_ = request.POST['file']
+        permanent_file = open(
+            os.path.join(
+                config['app_conf']['permanent_store'],
+                file_.filename.replace(os.sep, '_')), 'wb'
+        )
+        shutil.copyfileobj(file_.file, permanent_file)
+        file_.file.close()
+        permanent_file.close()
+        return "OK"
