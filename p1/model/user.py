@@ -44,10 +44,10 @@ def list(cursor):
     return cursor.fetchall() if cursor.rowcount else None
 
 
-def delete(cursor, id_):
+def delete(cursor, id):
         try:
             cursor.execute(
-                "DELETE FROM users WHERE id = %s", (id_, )
+                "DELETE FROM users WHERE id = %s", (id, )
                 )
         except:
             print((cursor.query))
