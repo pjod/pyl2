@@ -31,7 +31,8 @@ class AdminController(BaseController):
         try:
             added = model.user.add(
                 cursor, request.POST['login'], request.POST['password'],
-                request.POST['name'], request.POST['surname']
+                request.POST['password'], request.POST['name'],
+                request.POST['surname']
                     )
         except model.user.LoginDuplicate:
             err = "duplikat"
@@ -90,8 +91,6 @@ class AdminController(BaseController):
         c.surname = session['admin']['nazwisko']
         try:
             success = model.user.delete(cursor, request.POST['id'])
-        except:
-            print("AAAAAAAAA")
         finally:
             cursor.close()
             conn.close()

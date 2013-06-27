@@ -20,7 +20,7 @@ def hash_pass(login, password):
     return hashlib.sha224(login + sol + password).hexdigest()
 
 
-def add(cursor, login, password, name, surname):
+def add(cursor, login, password, password_c, name, surname):
     try:
         cursor.execute(
         "INSERT INTO users (login, password, imie, nazwisko) \
