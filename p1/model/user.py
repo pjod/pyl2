@@ -34,11 +34,11 @@ def add(cursor, login, password, name, surname):
     return cursor.rowcount == 1
 
 
-def list(cursor):
+def list_(cursor):
     cursor.execute(
         "SELECT id, login, name, surname FROM users ORDER BY id"
     )
-    return cursor.fetchall() if cursor.rowcount else None
+    return cursor.fetchall()
 
 
 def delete(cursor, id_):
@@ -54,9 +54,9 @@ def delete(cursor, id_):
 
 def get(cursor, id_):
     cursor.execute(
-        "SELECT login, name, surname FROM users WHERE id=%s", (id_, )
+        "SELECT id=%s, login, name, surname FROM users", (id_, )
     )
-    return cursor.fetchone() if cursor.rowcount else None
+    return cursor.fetchone()
 
 
 def edit(cursor, login, password, name, surname, id_):

@@ -74,7 +74,7 @@ class AdminController(BaseController):
         cursor = conn.cursor(cursor_factory=RealDictCursor)
 #        list_ = []
         try:
-            list_ = model.user.list(cursor)
+            list_ = model.user.list_(cursor)
         finally:
             cursor.close()
             conn.close()

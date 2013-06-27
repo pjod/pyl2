@@ -24,6 +24,7 @@ ${h.secure_form(url(controller="admin", action="edit_user"), method ="POST")}
 ${h.password("password_c",)}</div>
 <div><label for="nameField">Imię: </label>${h.text("name")}</div>
 <div><label for="surnameField">Nazwisko: </label>${h.text("surname")}</div>
+${h.hidden("id")}
 </fieldset>
 <div>${h.submit("edit", "Zapisz")}</div>
 </form>
