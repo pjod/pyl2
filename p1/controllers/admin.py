@@ -88,18 +88,17 @@ class AdminController(BaseController):
     def delete_user(self):
         conn = g.dbpool.connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)
-        c.delete = "Nie udało się"
+        c.surname = session['admin']['nazwisko']
         try:
             del_ = model.user.delete(cursor, request.POST['del_login'])
         finally:
             cursor.close()
             conn.close()
         if del_:
-            c.surname = session['admin']['nazwisko']
-            c.delete = "User %s usunięty!" % request.POST['login']
-            return render("admin/delete_user.mako")
+#            c.delete = request.POST["del_login"] if del_ else None
+            return "OK"
         else:
-            return render("admin/delete_user.mako")
+            return "dupa"
 
 
 #    def modify_user(self):

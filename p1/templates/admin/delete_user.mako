@@ -5,7 +5,7 @@
     <h4>jesteś zalogowany jako: ${c.surname}</h4>
 % endif
 
-## <div>${c.delete}</div>
+<div>${c.delete}</div>
 
 ${h.secure_form(url(controller="admin", action="delete_user"), method ="POST")}
 <fieldset>
