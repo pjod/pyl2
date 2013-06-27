@@ -38,7 +38,7 @@ def add(cursor, login, password, password_c, name, surname):
 def list(cursor):
     cursor.execute(
         "SELECT id, login, name, surname FROM users ORDER BY id"
-        )
+    )
     return cursor.fetchall() if cursor.rowcount else None
 
 
@@ -46,7 +46,8 @@ def delete(cursor, id):
     try:
         cursor.execute(
             "DELETE FROM users WHERE id = %s", (id, )
-            )
+        )
+        cursor.execute("COMMIT")
     except:
         print((cursor.query))
         raise
@@ -56,7 +57,7 @@ def delete(cursor, id):
 def get(cursor, id):
     cursor.execute(
         "SELECT login, name, surname FROM users WHERE id=%s", (id, )
-        )
+    )
     return cursor.fetchone() if cursor.rowcount else None
 
 
@@ -65,5 +66,5 @@ def edit(cursor, login, password, name, surname, id_):
         cursor.execute(
             "UPDATE users SET login=%s, password=%s, name=%s, surname=%s WHERE \
             id=%s", (login, hash_pass(login, password), name, surname, id_,)
-            )
+        )
     return True if cursor.rowcount == 1 else False
