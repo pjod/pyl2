@@ -7,7 +7,6 @@
 <table>
 <tr>
 <th>lp</th>
-<th>id</th>
 <th>login</th>
 <th>imię</th>
 <th>nazwisko</th>
@@ -23,8 +22,9 @@
 <%
     j += 1
 %>
-        <td>${i["id"]}</td><td>${i["login"]}</td>
-        <td>${i["imie"]}</td><td>${i["nazwisko"]}</td>
+        <td>${i["login"]}</td><td>${i["imie"]}</td><td>${i["nazwisko"]}</td>
+        <td>${h.secure_form(url(controller="admin", action="delete_user_form"),
+            id=${i["id"]}), method ="POST")}<button>Usuń usera</button></form>
     </tr>
 % endfor
 </table>
