@@ -23,8 +23,10 @@
     j += 1
 %>
         <td>${i["login"]}</td><td>${i["imie"]}</td><td>${i["nazwisko"]}</td>
+        <td>${h.secure_form(url(controller="admin", action="modify_user_form",
+            id_=i["id"]), method ="POST")}<button>Modyfikuj</button></form></td>
         <td>${h.secure_form(url(controller="admin", action="delete_user_form",
-            id_=${i["id"]}), method ="POST")}<button>Usuń usera</button></form>
+            id_=i["id"]), method ="POST")}<button>Usuń</button></form></td>
     </tr>
 % endfor
 </table>
