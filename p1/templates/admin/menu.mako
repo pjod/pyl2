@@ -1,11 +1,7 @@
 <%inherit file="/layout.mako"/>
 
 ${h.form(url(controller="admin", action="list_users"), method ="POST")}
-<button>Zobacz userów</button>
-</form>
-
-${h.secure_form(url(controller="admin", action="delete_user_form"), method ="POST")}
-<button>Usuń usera</button>
+<button>Zobacz/zarządzaj userami</button>
 </form>
 
 ${h.secure_form(url(controller="admin", action="add_user_form"), method ="POST")}

@@ -90,7 +90,7 @@ class AdminController(BaseController):
         cursor = conn.cursor(cursor_factory=RealDictCursor)
         c.surname = session['admin']['nazwisko']
         try:
-            del_ = model.user.delete(cursor, request.POST['id_'])
+            del_ = model.user.delete(cursor, request.GET['id_'])
         finally:
             cursor.close()
             conn.close()
