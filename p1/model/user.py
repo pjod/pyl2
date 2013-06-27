@@ -67,14 +67,10 @@ def get(cursor, id):
     return cursor.fetchone() if cursor.rowcount else None
 
 
-def edit(cursor, login, password, name, surname, id):
+def edit(cursor, login, password, name, surname, id_):
     try:
         cursor.execute(
-            "UPDATE users SET login=%s, password=%, name=%, surname=%s WHERE \
-            id=%s", (login, hash_pass(login, password), name, surname, id, )
+            "UPDATE users SET login=%s, password=%s, name=%s, surname=%s WHERE \
+            id=%s", (login, hash_pass(login, password), name, surname, id_,)
             )
-    if cursor.rowcount == 1:
-        cursor.execute("COMMIT")
-        return True
-    else:
-        return False
+        return True if cursor.rowcount == 1 else False
