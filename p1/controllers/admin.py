@@ -99,7 +99,6 @@ class AdminController(BaseController):
             redirect(
                 url(controller="admin", action="list_users", stat="failure"))
 
-    @authenticate_form
     def edit_user_form(self):
         int(request.GET['id'])
         conn = g.dbpool.connection()
@@ -112,6 +111,7 @@ class AdminController(BaseController):
                 )
 
     @validate(schema=EditUser(), form="edit_user_form")
+    @authenticate_form
     def edit_user(self):
         conn = g.dbpool.connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)
