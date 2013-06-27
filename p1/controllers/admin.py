@@ -97,4 +97,4 @@ class AdminController(BaseController):
             redirect(
                 url(controller="admin", action="list_users", stat="failure"))
 
-#    def edit_user(self):
+    def edit_user(self):

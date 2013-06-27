@@ -59,4 +59,9 @@ def delete(cursor, id):
         else:
             return False
 
-#def edit():
+def get(cursor, id):
+    try:
+        cursor.execute(
+            "SELECT login, name, surname WHERE id=%s", (id, )
+            )
+    return cursor.fetchone() if cursor.rowcount else None
