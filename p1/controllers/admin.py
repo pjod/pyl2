@@ -66,17 +66,36 @@ class AdminController(BaseController):
         c.duplicate = False
         return render("/admin/panel.mako")
 
-    def view(self):
+    def list_users(self):
         conn = g.dbpool.connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)
         try:
-            users = model.user.view(cursor)
+            list_ = model.user.list(cursor)
         finally:
             cursor.close()
             conn.close()
-        if users:
+        if list_:
             c.surname = session['admin']['nazwisko']
-            c.records = users
-            return render("admin/view.mako")
+            c.records = list_
+            return render("admin/list_users.mako")
         else:
             return "kupa"
+
+    def delete_user(self):
+        conn = g.dbpool.connection()
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
+        c.delete = "Nie udało się"
+        try:
+            del_ = model.user.delete(cursor, request.POST['del_login'])
+        finally:
+            cursor.close()
+            conn.close()
+        if del_:
+            c.surname = session['admin']['nazwisko']
+            c.delete = "User %s usunięty!" % request.POST['login']
+            return render("admin/delete_user.mako")
+        else:
+            return render("admin/delete_user.mako")
+
+
+#    def modify_user(self):

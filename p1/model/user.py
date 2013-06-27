@@ -37,7 +37,7 @@ def add(cursor, login, password, name, surname):
         return False
 
 
-def view(cursor):
+def list(cursor):
     cursor.execute(
         "SELECT id, login, imie, nazwisko FROM users ORDER BY id"
         )
