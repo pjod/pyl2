@@ -42,3 +42,14 @@ def list(cursor):
         "SELECT id, login, imie, nazwisko FROM users ORDER BY id"
         )
     return cursor.fetchall() if cursor.rowcount else None
+
+
+def delete(cursor, login):
+        cursor.execute(
+            "DELETE FROM users WHERE (login) VALUES (%s)", (login)
+            )
+        if cursor.rowcount == 1:
+            cursor.execute("COMMIT")
+            return True
+        else:
+            return False

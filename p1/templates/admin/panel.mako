@@ -22,6 +22,5 @@ ${h.password("password_c",)}</div>
 <div>${h.submit("dodaj_usera", "Dodaj_usera")}</div>
 </form>
 <p>
-${h.form(url(controller="uzytkownik", action="logout"), method ="POST")}
-<button>Wyloguj się</button>
-</form>
+
+<div id="menu"><%include file="/admin/menu.mako"/></div>
