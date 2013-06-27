@@ -16,7 +16,7 @@ class ValidAdmin(formencode.Schema):
     password_admin = formencode.validators.String(not_empty=True)
 
 
-class AddUser(formencode.Schema):
+class User(formencode.Schema):
     allow_extra_fields = True
     filter_extra_fields = True
     login = formencode.validators.String(min=4, max=8)
@@ -26,3 +26,7 @@ class AddUser(formencode.Schema):
         'password_c')]
     name = formencode.validators.String(not_empty=True)
     surname = formencode.validators.String(not_empty=True)
+
+
+class AddUser(User):
+    pass
