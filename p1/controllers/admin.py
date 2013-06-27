@@ -141,10 +141,10 @@ class AdminController(BaseController):
 
     def add_file(self):
         file_ = request.POST['file']
-        if len(file_.value) < 1048576:
-            pass
-        else:
-            return "za duzy plik"
+#        print((os.fstat(request.POST["file"].file)))
+#        print((request.POST["file"].file.fileno))
+        if os.fstat(request.POST["file"].file.fileno()).st_size > 1024 * 1024:
+            return "za duży plik"
         permanent_file = open(
             os.path.join(
                 config['app_conf']['permanent_store'],
