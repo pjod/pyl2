@@ -46,18 +46,18 @@ def list(cursor):
 
 
 def delete(cursor, id):
-        try:
-            cursor.execute(
-                "DELETE FROM users WHERE id = %s", (id, )
-                )
-        except:
-            print((cursor.query))
-            raise
-        if cursor.rowcount == 1:
-            cursor.execute("COMMIT")
-            return True
-        else:
-            return False
+    try:
+        cursor.execute(
+            "DELETE FROM users WHERE id = %s", (id, )
+            )
+    except:
+        print((cursor.query))
+        raise
+    if cursor.rowcount == 1:
+        cursor.execute("COMMIT")
+        return True
+    else:
+        return False
 
 
 def get(cursor, id):
@@ -65,3 +65,16 @@ def get(cursor, id):
         "SELECT login, name, surname FROM users WHERE id=%s", (id, )
         )
     return cursor.fetchone() if cursor.rowcount else None
+
+
+def edit(cursor, login, password, name, surname, id):
+    try:
+        cursor.execute(
+            "UPDATE users SET login=%s, password=%, name=%, surname=%s WHERE \
+            id=%s", (login, hash_pass(login, password), name, surname, id, )
+            )
+    if cursor.rowcount == 1:
+        cursor.execute("COMMIT")
+        return True
+    else:
+        return False

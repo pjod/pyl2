@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-<%inherit file="/layout.mako"/>
-
 ${h.form(url(controller="admin", action="list_users"), method ="POST")}
 <button>Zobacz/zarządzaj userami</button>
 </form>
