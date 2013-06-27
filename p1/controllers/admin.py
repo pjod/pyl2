@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from pylons import request, response, session, tmpl_context as c, url
 from pylons.controllers.util import abort, redirect
-from p1.model.schema.schema import User
+from p1.model.schema.schema import AddUser, EditUser
 from pylons.decorators import validate
 from psycopg2.extras import RealDictCursor
 from p1.lib.base import BaseController, render
@@ -21,7 +21,7 @@ class AdminController(BaseController):
         else:
             return redirect(url(controller='gosc', action="logowanie"))
 
-    @validate(schema=User(), form="add_user_form")
+    @validate(schema=AddUser(), form="add_user_form")
     @authenticate_form
     def add_user(self):
         conn = g.dbpool.connection()
@@ -99,6 +99,7 @@ class AdminController(BaseController):
             redirect(
                 url(controller="admin", action="list_users", stat="failure"))
 
+    @authenticate_form
     def edit_user_form(self):
         int(request.GET['id'])
         conn = g.dbpool.connection()
@@ -110,7 +111,7 @@ class AdminController(BaseController):
                 model.user.get(cursor, request.GET['id'])
                 )
 
-    @validate(schema=User(), form="edit_user_form")
+    @validate(schema=EditUser(), form="edit_user_form")
     def edit_user(self):
         conn = g.dbpool.connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)

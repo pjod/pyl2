@@ -20,13 +20,17 @@ class User(formencode.Schema):
     allow_extra_fields = True
     filter_extra_fields = True
     login = formencode.validators.String(min=4, max=8)
-    password = formencode.validators.String(min=8, max=16)
-    password_c = formencode.validators.String()
-    chained_validators = [formencode.validators.FieldsMatch('password',
-        'password_c')]
     name = formencode.validators.String(not_empty=True)
     surname = formencode.validators.String(not_empty=True)
 
 
+class EditUser(User):
+    pass
+
+
 class AddUser(User):
     pass
+    password = formencode.validators.String(min=8, max=16)
+    password_c = formencode.validators.String()
+    chained_validators = [formencode.validators.FieldsMatch('password',
+        'password_c')]
