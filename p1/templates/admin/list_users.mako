@@ -33,17 +33,35 @@
 <%
     j += 1
 %>
-        <td>${i["login"]}</td><td>${i["name"]}</td><td>${i["surname"]}</td>
+        <td>
+        ${i["login"]}</td><td>${i["name"]}</td><td>${i["surname"]}
+        </td>
 
-        <td>${h.secure_form(url(controller="admin", action="edit_user_form"),
-            method ="GET")}
-            ${h.hidden("id", i["id"])}<button>Modyfikuj</button></form></td>
+        <td>
+        ${h.secure_form(
+            url(controller="admin", action="edit_user"), method="POST")}
+            ${h.hidden("id", i["id"])}
+            <button>Modyfikuj</button>
+        </form>
+        </td>
 
-        <td>${h.secure_form(url(controller="admin", action="delete_user"),
-            method ="POST")}
-            ${h.hidden("id", i["id"])}<button>Usuń</button></form></td>
+        <td>
+        ${h.secure_form(
+            url(controller="admin", action="delete_user"), method="POST")}
+            ${h.hidden("id", i["id"])}
+            <button>Usuń</button>
+        </form>
+        </td>
+
+        <td>
+        ${h.secure_form(
+            url(controller="admin", action="add_file"), multipart="True")}
+            ${h.file('file')} ${h.hidden("id", i["id"])}
+            <button>Dodaj plik</button>
+        </form>
+        </td>
     </tr>
 % endfor
 </table>
-<p>
+
 <div id="menu"><%include file="/admin/menu.mako"/></div>
