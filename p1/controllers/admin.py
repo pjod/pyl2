@@ -33,7 +33,8 @@ class AdminController(BaseController):
                 cursor, request.POST['login'], request.POST['password'],
                 request.POST['password'], request.POST['name'],
                 request.POST['surname']
-                    )
+            )
+            cursor.execute("COMMIT")
         except model.user.LoginDuplicate:
             err = "duplikat"
         finally:
@@ -50,7 +51,7 @@ class AdminController(BaseController):
             redirect(
                 url(controller="admin", action="add_user_form",
                     key=key, err=err)
-                )
+            )
 
     def add_user_form(self):
         c.surname = session['admin']['nazwisko']
@@ -59,7 +60,8 @@ class AdminController(BaseController):
             c.duplicate = True
             return formencode.htmlfill.render(
                 render("/admin/panel.mako"), session["duplikaty_kont_%s"
-                % request.GET["key"]])
+                % request.GET["key"]]
+                )
             del session["duplikaty_kont_%s" % request.GET["key"]]
         c.duplicate = False
         return render("/admin/panel.mako")
@@ -98,12 +100,34 @@ class AdminController(BaseController):
             redirect(
                 url(controller="admin", action="list_users", stat="failure"))
 
-    def edit_user(self):
+    def edit_user_form(self):
+        int(request.GET['id'])
         conn = g.dbpool.connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)
         c.surname = session['admin']['nazwisko']
         c.stat = None
         return formencode.htmlfill.render(
                 render("/admin/edit_user.mako"), model.user.get(cursor,
-                    request.POST['id'])
+                    request.GET['id'])
                 )
+
+    def edit_user(self):
+        conn = g.dbpool.connection()
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
+        c.surname = session['admin']['nazwisko']
+        try:
+            success = model.user.edit(
+                cursor, request.POST['login'], request.POST['login'],
+                request.POST['password'], request.POST['name'],
+                request.POST['surname']
+            )
+            cursor.execute("COMMIT")
+        finally:
+            cursor.close()
+            conn.close()
+        if success:
+            return redirect(
+                url(controller="admin", action="list_users", stat="success"))
+        else:
+            return redirect(
+                url(controller="admin", action="list_users", stat="success"))

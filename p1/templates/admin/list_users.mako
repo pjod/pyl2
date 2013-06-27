@@ -33,9 +33,9 @@
 <%
     j += 1
 %>
-        <td>${i["login"]}</td><td>${i["imie"]}</td><td>${i["nazwisko"]}</td>
+        <td>${i["login"]}</td><td>${i["name"]}</td><td>${i["surname"]}</td>
 
-        <td>${h.secure_form(url(controller="admin", action="edit_user"),
+        <td>${h.secure_form(url(controller="admin", action="edit_user_form"),
             method ="POST")}
             ${h.hidden("id", i["id"])}<button>Modyfikuj</button></form></td>
 

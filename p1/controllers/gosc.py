@@ -28,7 +28,7 @@ class GoscController(BaseController):
         try:
             logged_in = model.user.auth(
                 cursor, request.POST['login'], request.POST['password']
-                )
+            )
         finally:
             cursor.close()
             conn.close()
@@ -48,7 +48,7 @@ class GoscController(BaseController):
             logged_in = model.admin.auth(
                 cursor, request.POST['login_admin'],
                 request.POST['password_admin']
-                )
+            )
         finally:
             cursor.close()
             conn.close()
