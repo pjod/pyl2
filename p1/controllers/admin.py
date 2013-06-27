@@ -117,9 +117,9 @@ class AdminController(BaseController):
         c.surname = session['admin']['nazwisko']
         try:
             success = model.user.edit(
-                cursor, request.POST['login'], request.POST['login'],
-                request.POST['password'], request.POST['name'],
-                request.POST['surname']
+                cursor, request.POST['login'], request.POST['password'],
+                request.POST['name'], request.POST['surname'],
+                request.POST['id']
             )
             cursor.execute("COMMIT")
         finally:
