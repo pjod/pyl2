@@ -81,6 +81,10 @@ class AdminController(BaseController):
         else:
             return "kupa"
 
+    def delete_user_form(self):
+        c.surname = session['admin']['nazwisko']
+        return render("admin/delete_user.mako")
+
     def delete_user(self):
         conn = g.dbpool.connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)

@@ -46,7 +46,7 @@ def list(cursor):
 
 def delete(cursor, login):
         cursor.execute(
-            "DELETE FROM users WHERE (login) VALUES (%s)", (login)
+            "DELETE FROM users WHERE login = %s", login
             )
         if cursor.rowcount == 1:
             cursor.execute("COMMIT")
