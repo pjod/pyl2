@@ -10,9 +10,6 @@ import p1.model as model
 #import psycopg2
 import formencode
 from pylons.decorators.secure import authenticate_form
-import psycopg2.extensions
-psycopg2.extensions.register_type(psycopg2.extensions.UNICODE)
-psycopg2.extensions.register_type(psycopg2.extensions.UNICODEARRAY)
 
 
 class AdminController(BaseController):
@@ -42,7 +39,8 @@ class AdminController(BaseController):
             cursor.close()
             conn.close()
         if added:
-            return "ok"
+            return redirect(
+                url(controller="admin", action="list_users", stat="success"))
         else:
             from random import getrandbits
             key = getrandbits(20)
@@ -53,7 +51,6 @@ class AdminController(BaseController):
                     key=key, err=err)
                 )
 
-    @authenticate_form
     def add_user_form(self):
         c.surname = session['admin']['nazwisko']
         if request.GET.get("key") and "duplikaty_kont_%s" \
@@ -67,23 +64,21 @@ class AdminController(BaseController):
         return render("/admin/panel.mako")
 
     def list_users(self):
-        if request.GET["stat"]:
+        if "stat" in request.GET:
             c.stat = request.GET["stat"]
         else:
             c.stat = None
         conn = g.dbpool.connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)
+#        list_ = []
         try:
             list_ = model.user.list(cursor)
         finally:
             cursor.close()
             conn.close()
-        if list_:
-            c.surname = session['admin']['nazwisko']
-            c.records = list_
-            return render("admin/list_users.mako")
-        else:
-            return "kupa"
+        c.surname = session['admin']['nazwisko']
+        c.records = list_
+        return render("admin/list_users.mako")
 
 #    def delete_user_form(self):
 #        c.surname = session['admin']['nazwisko']
@@ -95,14 +90,15 @@ class AdminController(BaseController):
         c.surname = session['admin']['nazwisko']
         try:
             success = model.user.delete(cursor, request.POST['id'])
-#        except:
+        except:
+            print("AAAAAAAAA")
         finally:
             cursor.close()
             conn.close()
         if success:
-            redirect(url(controller="admin", action="list_users",
-            stat="success"))
+            redirect(
+                url(controller="admin", action="list_users", stat="success"))
         else:
-            redirect(url(controller="admin", action="list_users",
-            stat="failure"))
+            redirect(
+                url(controller="admin", action="list_users", stat="failure"))
 #    def modify_user(self):

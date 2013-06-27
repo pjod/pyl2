@@ -24,7 +24,8 @@ def add(cursor, login, password, name, surname):
     try:
         cursor.execute(
         "INSERT INTO users (login, password, imie, nazwisko) \
-        VALUES (%s, %s, %s, %s)", (login, hash_pass(password), name, surname)
+        VALUES (%s, %s, %s, %s)",
+        (login, hash_pass(login, password), name, surname)
         )
     except psycopg2.Error as e:
         if "\"users_login_key\"" in e.pgerror:

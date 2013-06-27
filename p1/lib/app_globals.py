@@ -4,7 +4,9 @@ import psycopg2
 from beaker.cache import CacheManager
 from beaker.util import parse_cache_config_options
 from DBUtils.PooledDB import PooledDB
-
+import psycopg2.extensions
+psycopg2.extensions.register_type(psycopg2.extensions.UNICODE)
+psycopg2.extensions.register_type(psycopg2.extensions.UNICODEARRAY)
 
 class Globals(object):
     """Globals acts as a container for objects available throughout the
