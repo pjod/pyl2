@@ -5,8 +5,8 @@
     <h4>jesteś zalogowany jako: ${c.surname}</h4>
 % endif
 
-<div><label for="del_loginField">Podaj login usera: </label>${h.text("del_login")}</div>
-<button>Usuń usera!</button>
+<div>User usunięty!</div>
+
 </fieldset>
 </form>
 <p>

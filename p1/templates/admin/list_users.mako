@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 <%inherit file="/layout.mako"/>
 
 % if c.surname:
@@ -18,7 +19,7 @@
 % for i in c.records:
     <tr>
 
-            <td>${j}</td>
+        <td>${j}</td>
 <%
     j += 1
 %>

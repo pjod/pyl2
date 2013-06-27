@@ -10,14 +10,14 @@ class LoginDuplicate(Exception):
 def auth(cursor, login, password):
     cursor.execute(
         "SELECT id, login, password, imie, nazwisko FROM users \
-        WHERE login=%s and password=%s", (login, hash_pass(password))
+        WHERE login=%s and password=%s", (login, hash_pass(login, password))
        )
     return cursor.fetchone() if cursor.rowcount else None
 
 
-def hash_pass(password):
-    SOL_DO_HASEL = "123sdf45"
-    return hashlib.sha224(SOL_DO_HASEL + password).hexdigest()
+def hash_pass(login, password):
+    sol = "123sdf45"
+    return hashlib.sha224(login + sol + password).hexdigest()
 
 
 def add(cursor, login, password, name, surname):

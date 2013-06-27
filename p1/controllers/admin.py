@@ -90,15 +90,15 @@ class AdminController(BaseController):
         cursor = conn.cursor(cursor_factory=RealDictCursor)
         c.surname = session['admin']['nazwisko']
         try:
-            del_ = model.user.delete(cursor, request.POST['id'])
+            success = model.user.delete(cursor, request.POST['id'])
+#        except:
         finally:
             cursor.close()
             conn.close()
-        if del_:
-#            c.delete = request.POST["del_login"] if del_ else None
-            return "OK"
+        if success:
+            redirect(url(controller="admin", action="list_users",
+            stat="success"))
         else:
-            return "dupa"
-
-
+            redirect(url(controller="admin", action="list_users",
+            stat="failure"))
 #    def modify_user(self):
