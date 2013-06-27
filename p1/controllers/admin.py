@@ -31,8 +31,7 @@ class AdminController(BaseController):
         try:
             added = model.user.add(
                 cursor, request.POST['login'], request.POST['password'],
-                request.POST['password'], request.POST['name'],
-                request.POST['surname']
+                request.POST['name'], request.POST['surname']
             )
             cursor.execute("COMMIT")
         except model.user.LoginDuplicate:
@@ -107,8 +106,8 @@ class AdminController(BaseController):
         c.surname = session['admin']['nazwisko']
         c.stat = None
         return formencode.htmlfill.render(
-                render("/admin/edit_user.mako"), model.user.get(cursor,
-                    request.GET['id'])
+                render("/admin/edit_user.mako"),
+                model.user.get(cursor, request.GET['id'])
                 )
 
     def edit_user(self):
