@@ -81,10 +81,6 @@ class AdminController(BaseController):
         c.records = list_
         return render("admin/list_users.mako")
 
-#    def delete_user_form(self):
-#        c.surname = session['admin']['nazwisko']
-#        return render("admin/delete_user.mako")
-
     def delete_user(self):
         conn = g.dbpool.connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)
@@ -100,4 +96,5 @@ class AdminController(BaseController):
         else:
             redirect(
                 url(controller="admin", action="list_users", stat="failure"))
-#    def modify_user(self):
+
+#    def edit_user(self):

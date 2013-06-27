@@ -58,3 +58,5 @@ def delete(cursor, id):
             return True
         else:
             return False
+
+#def edit():
