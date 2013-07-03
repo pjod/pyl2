@@ -70,12 +70,9 @@ def edit(cursor, login, password, name, surname, id_):
 def add_file(cursor, filename, id_user):
     try:
         cursor.execute(
-            "INSERT INTO files id_user=%s, filename=%s", id_user, filename,
-            )
-        cursor.execute(
-            "SELECT id_file FROM files WHERE id_user=%s, filename=%s",
-            id_user, filename,
+            "INSERT INTO files (id_user, filename) VALUES (%s, %s) \
+            RETURNING id_file", id_user, filename,
             )
     except:
         print "duuuuua"
-    return cursor.fetchone()
+    return cursor.fetchone()[0]
