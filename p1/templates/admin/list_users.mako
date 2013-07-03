@@ -39,7 +39,7 @@
 
         <td>
         ${h.secure_form(
-            url(controller="admin", action="edit_user"), method="POST")}
+            url(controller="admin", action="edit_user_form"), method="POST")}
             ${h.hidden("id", i["id"])}
             <button>Modyfikuj</button>
         </form>

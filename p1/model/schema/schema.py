@@ -29,8 +29,7 @@ class EditUser(User):
 
 
 class AddUser(User):
-#    pass
     password = formencode.validators.String(min=8, max=16)
     password_c = formencode.validators.String()
-    chained_validators = [formencode.validators.FieldsMatch('password',
-        'password_c')]
+    chained_validators = [formencode.validators.FieldsMatch(
+        'password', 'password_c')]
