@@ -71,8 +71,8 @@ def add_file(cursor, filename, id_user):
     try:
         cursor.execute(
             "INSERT INTO files (id_user, filename) VALUES (%s, %s) \
-            RETURNING id_file", id_user, filename,
+            RETURNING id_file", (id_user, filename,)
             )
     except:
         print "duuuuua"
-    return cursor.fetchone()[0]
+    return cursor.fetchone().get('id_file')

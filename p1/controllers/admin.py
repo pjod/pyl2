@@ -153,7 +153,7 @@ class AdminController(BaseController):
                 cursor, tmp_file.filename, request.POST['id']
                 )
             cursor.execute("COMMIT")
-            perm_file = open(root + id_file, 'w')
+            perm_file = open(root + str(id_file), 'w')
 #            os.path.join(
 #                config['app_conf']['permanent_store'],
 #                file_.filename.replace(os.sep, '_')), 'wb'
