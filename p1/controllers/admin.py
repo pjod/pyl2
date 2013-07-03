@@ -142,24 +142,23 @@ class AdminController(BaseController):
     def add_file(self):
         root = '/home/pjo/p1/data/files/'
         tmp_file = request.POST['file']
-
         conn = g.dbpool.connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)
         if os.fstat(tmp_file.file.fileno()).st_size > 1024 * 1024:
             return "za duży plik"
         try:
-            id_file = model.user.add_file(
+            file_id = model.user.add_file(
                 cursor, tmp_file.filename, request.POST['id']
                 )
             cursor.execute("COMMIT")
-            perm_file = open(root + str(id_file), 'w')
+            perm_file = open(root + str(file_id), 'w')
             shutil.copyfileobj(tmp_file.file, perm_file)
             perm_file.close()
         finally:
             tmp_file.file.close()
             cursor.close()
             conn.close()
-        if id_file:
-            return redirect
+        if file_id:
+            return "ok"
         else:
-            return redirect
+            return "dupa"

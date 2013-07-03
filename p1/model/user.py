@@ -71,13 +71,19 @@ def edit(cursor, login, password, name, surname, id_):
     return cursor.rowcount == 1
 
 
-def add_file(cursor, filename, id_user):
+def add_file(cursor, filename, user_id):
     try:
         cursor.execute(
-            "INSERT INTO files (id_user, filename) VALUES (%s, %s) \
-            RETURNING id_file", (id_user, filename,)
+            "INSERT INTO files (user_id, filename) VALUES (%s, %s) \
+            RETURNING id", (user_id, filename,)
             )
     except psycopg2.Error as e:
         if "duplicate key" in e.pgerror:
             raise Duplicate(e.pgerror)
-    return cursor.fetchone().get('id_file')
+    except:
+        return False
+    print "  "
+    print dir(cursor.fetchone())
+    print "  "
+    print dir(cursor.fetchone().get('id'))
+    return cursor.fetchone().get('id')
