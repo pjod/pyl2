@@ -65,3 +65,17 @@ def edit(cursor, login, password, name, surname, id_):
         id=%s", (login, hash_pass(login, password), name, surname, id_,)
         )
     return cursor.rowcount == 1
+
+
+def add_file(cursor, filename, id_user):
+    try:
+        cursor.execute(
+            "INSERT INTO files id_user=%s, filename=%s", id_user, filename,
+            )
+        cursor.execute(
+            "SELECT id_file FROM files WHERE id_user=%s, filename=%s",
+            id_user, filename,
+            )
+    except:
+        print "duuuuua"
+    return cursor.fetchone()

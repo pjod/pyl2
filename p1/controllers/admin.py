@@ -4,7 +4,7 @@ import formencode
 
 from pylons import app_globals as g
 from pylons import request, response, session, tmpl_context as c, url
-from pylons.controllers.util import abort, redirect
+from pylons.controllers.util import redirect
 from pylons.decorators import validate
 from pylons.decorators.secure import authenticate_form
 from psycopg2.extras import RealDictCursor
@@ -105,14 +105,14 @@ class AdminController(BaseController):
                 url(controller="admin", action="list_users", stat="failure"))
 
     def edit_user_form(self):
-        int(request.GET['id'])
+        int(request.POST['id'])
         conn = g.dbpool.connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)
         c.surname = session['admin']['nazwisko']
         c.stat = None
         return formencode.htmlfill.render(
                 render("/admin/edit_user.mako"),
-                model.user.get(cursor, request.GET['id']),
+                model.user.get(cursor, request.POST['id']),
                 force_defaults=False
                 )
 
@@ -140,17 +140,31 @@ class AdminController(BaseController):
                 url(controller="admin", action="list_users", stat="success"))
 
     def add_file(self):
+        root = '/home/pjo/p1/data/files/'
+        conn = g.dbpool.connection()
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
         file_ = request.POST['file']
 #        print((os.fstat(request.POST["file"].file)))
 #        print((request.POST["file"].file.fileno))
         if os.fstat(request.POST["file"].file.fileno()).st_size > 1024 * 1024:
             return "za duży plik"
-        permanent_file = open(
-            os.path.join(
-                config['app_conf']['permanent_store'],
-                file_.filename.replace(os.sep, '_')), 'wb'
-        )
-        shutil.copyfileobj(file_.file, permanent_file)
-        file_.file.close()
-        permanent_file.close()
-        return "OK"
+        try:
+            id_file = model.user.add_file(
+                cursor, file_.filename, request.POST['id']
+                )
+            cursor.execute("COMMIT")
+            permanent_file = open(root + id_file, 'wb')
+#            os.path.join(
+#                config['app_conf']['permanent_store'],
+#                file_.filename.replace(os.sep, '_')), 'wb'
+#        )
+            shutil.copyfileobj(file_.file, permanent_file)
+            permanent_file.close()
+        finally:
+            file_.file.close()
+            cursor.close()
+            conn.close()
+        if id_file:
+            return redirect
+        else:
+            return redirect
