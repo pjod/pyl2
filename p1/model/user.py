@@ -7,6 +7,10 @@ class LoginDuplicate(Exception):
     pass
 
 
+class Duplicate(Exception):
+    pass
+
+
 def auth(cursor, login, password):
     cursor.execute(
         "SELECT id, login, password, name, surname FROM users \
@@ -73,6 +77,7 @@ def add_file(cursor, filename, id_user):
             "INSERT INTO files (id_user, filename) VALUES (%s, %s) \
             RETURNING id_file", (id_user, filename,)
             )
-    except:
-        print "duuuuua"
+    except psycopg2.Error as e:
+        if "duplicate key" in e.pgerror:
+            raise Duplicate(e.pgerror)
     return cursor.fetchone().get('id_file')

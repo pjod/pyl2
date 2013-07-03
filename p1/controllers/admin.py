@@ -144,8 +144,6 @@ class AdminController(BaseController):
         conn = g.dbpool.connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)
         tmp_file = request.POST['file']
-#        print((os.fstat(request.POST["file"].file)))
-#        print((request.POST["file"].file.fileno))
         if os.fstat(request.POST["file"].file.fileno()).st_size > 1024 * 1024:
             return "za duży plik"
         try:
@@ -154,10 +152,6 @@ class AdminController(BaseController):
                 )
             cursor.execute("COMMIT")
             perm_file = open(root + str(id_file), 'w')
-#            os.path.join(
-#                config['app_conf']['permanent_store'],
-#                file_.filename.replace(os.sep, '_')), 'wb'
-#        )
             shutil.copyfileobj(tmp_file.file, perm_file)
             perm_file.close()
         finally:
