@@ -141,10 +141,11 @@ class AdminController(BaseController):
 
     def add_file(self):
         root = '/home/pjo/p1/data/files/'
+        tmp_file = request.POST['file']
+
         conn = g.dbpool.connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)
-        tmp_file = request.POST['file']
-        if os.fstat(request.POST["file"].file.fileno()).st_size > 1024 * 1024:
+        if os.fstat(tmp_file.file.fileno()).st_size > 1024 * 1024:
             return "za duży plik"
         try:
             id_file = model.user.add_file(
