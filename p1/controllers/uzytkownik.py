@@ -8,7 +8,7 @@ class UzytkownikController(BaseController):
 
     def welcome(self):
         if session.get('user'):
-            c.nazwisko = session['user']['nazwisko']
+            c.nazwisko = session['user']['surname']
             return render('/uzytkownik/welcome.mako')
         else:
             return redirect(url(controller='gosc', action="logowanie"))

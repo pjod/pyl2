@@ -55,6 +55,15 @@
 
         <td>
         ${h.secure_form(
+            url(controller="admin", action="list_files"), method="POST")}
+            ${h.hidden("id", i["id"])}
+            ${h.hidden("login", i["login"])}
+            <button>Zobacz pliki</button>
+        </form>
+        </td>
+
+        <td>
+        ${h.secure_form(
             url(controller="admin", action="add_file"), multipart="True")}
             ${h.file('file')} ${h.hidden("id", i["id"])}
             <button>Dodaj plik</button>

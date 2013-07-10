@@ -71,19 +71,22 @@ def edit(cursor, login, password, name, surname, id_):
     return cursor.rowcount == 1
 
 
-def add_file(cursor, filename, user_id):
-    try:
-        cursor.execute(
-            "INSERT INTO files (user_id, filename) VALUES (%s, %s) \
-            RETURNING id", (user_id, filename,)
-            )
-    except psycopg2.Error as e:
-        if "duplicate key" in e.pgerror:
-            raise Duplicate(e.pgerror)
-    except:
-        return False
-    print "  "
-    print dir(cursor.fetchone())
-    print "  "
-    print dir(cursor.fetchone().get('id'))
+def add_file(cursor, user_id, filename):
+#    try:
+    cursor.execute(
+        "INSERT INTO files (user_id, filename) VALUES (%s, %s) \
+        RETURNING id", (user_id, filename,)
+        )
+#    except psycopg2.Error as e:
+#        if "duplicate key" in e.pgerror:
+#            raise Duplicate(e.pgerror)
+#    print "  "
+#    print cursor.fetchone().get('id')
     return cursor.fetchone().get('id')
+
+
+def list_files(cursor, user_id):
+    cursor.execute(
+        "SELECT id, filename FROM files WHERE user_id=%s", (user_id,)
+        )
+    return cursor.fetchall()

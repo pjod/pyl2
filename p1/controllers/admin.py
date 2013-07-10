@@ -11,7 +11,7 @@ from psycopg2.extras import RealDictCursor
 from p1.model.schema.schema import AddUser, EditUser
 from p1.lib.base import BaseController, render
 
-import os
+#import os
 from pylons import config
 import shutil
 
@@ -140,18 +140,19 @@ class AdminController(BaseController):
                 url(controller="admin", action="list_users", stat="success"))
 
     def add_file(self):
-        root = '/home/pjo/p1/data/files/'
         tmp_file = request.POST['file']
+        dir_root = config['app_conf']['dir_root']
         conn = g.dbpool.connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)
-        if os.fstat(tmp_file.file.fileno()).st_size > 1024 * 1024:
+#        if os.fstat(tmp_file.file.fileno()).st_size > 1024 * 1024:
+        if tmp_file.length > 1024 * 1024:
             return "za duży plik"
         try:
             file_id = model.user.add_file(
-                cursor, tmp_file.filename, request.POST['id']
+                cursor, request.POST['id'], tmp_file.filename
                 )
             cursor.execute("COMMIT")
-            perm_file = open(root + str(file_id), 'w')
+            perm_file = open(dir_root + str(file_id), 'w')
             shutil.copyfileobj(tmp_file.file, perm_file)
             perm_file.close()
         finally:
@@ -162,3 +163,16 @@ class AdminController(BaseController):
             return "ok"
         else:
             return "dupa"
+
+    def list_files(self):
+        conn = g.dbpool.connection()
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
+        try:
+            list_ = model.user.list_files(cursor, request.POST['id'])
+            c.login = request.POST['login']
+        finally:
+            cursor.close()
+            conn.close()
+        c.surname = session['admin']['nazwisko']
+        c.records = list_
+        return render("admin/list_files.mako")
