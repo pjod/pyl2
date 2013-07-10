@@ -13,8 +13,9 @@
     <tr>
 
         <td>
-        <img src="${url(config['app_conf']['dir_root'] +str(i['id']))}"
-        name="${i['filename']}">
+        ${h.hidden("id", i["id"])}
+        <img src="${url(controller='admin', action='get_file')}"
+        name="${i['filename']}"/>
         </td>
 
     </tr>

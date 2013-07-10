@@ -10,6 +10,7 @@ from pylons.decorators.secure import authenticate_form
 from psycopg2.extras import RealDictCursor
 from p1.model.schema.schema import AddUser, EditUser
 from p1.lib.base import BaseController, render
+#from webob import response
 
 #import os
 from pylons import config
@@ -176,3 +177,10 @@ class AdminController(BaseController):
         c.surname = session['admin']['nazwisko']
         c.records = list_
         return render("admin/list_files.mako")
+
+    def get_file(self):
+#        response.headers['Content-type'] = 'image/jpg'
+        dir(request.POST['id'])
+        print(request.POST['id'])
+        print(config['app_conf']['dir_root'] + request.POST['id'])
+        return open(config['app_conf']['dir_root'] + str(id)).read()
